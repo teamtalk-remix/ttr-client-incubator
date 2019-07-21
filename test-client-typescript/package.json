@@ -4,7 +4,7 @@
   "description": "TeamTalk Remix Test Client in TypeScirpt.",
   "main": "./dist/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "gulp",
     "start": "npm run build && node ./dist/main.js"
   },
   "author": "Yuxiang Zhu <vfreex@gmail.com>",
@@ -14,7 +14,10 @@
     "@types/node": "^12.6.8",
     "@types/request-promise": "^4.1.44",
     "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
+    "gulp-uglify": "^3.0.2",
     "ts-protoc-gen": "^0.10.0",
     "typescript": "^3.5.3"
   },
