@@ -1,0 +1,26 @@
+{
+  "name": "ttr-client-ts",
+  "version": "0.1.0",
+  "description": "TeamTalk Remix Test Client in TypeScirpt.",
+  "main": "./dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node ./dist/main.js"
+  },
+  "author": "Yuxiang Zhu <vfreex@gmail.com>",
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+    "@types/google-protobuf": "^3.7.1",
+    "@types/node": "^12.6.8",
+    "@types/request-promise": "^4.1.44",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^5.0.1",
+    "ts-protoc-gen": "^0.10.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "google-protobuf": "^3.9.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}
