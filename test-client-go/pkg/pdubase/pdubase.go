@@ -106,8 +106,8 @@ func (p *CImPdu) SetHeader() {
 	seq = 0
 	//pdu.SetHeader
 	b := make([]byte, 16)
-	//length == 33
-	binary.BigEndian.PutUint32(b[0:], 0x000000021)
+	//length == 64
+	binary.BigEndian.PutUint32(b[0:], 0x000000040)
 	//version == 1
 	binary.BigEndian.PutUint16(b[4:], 0x0001)
 	//flag == 0
