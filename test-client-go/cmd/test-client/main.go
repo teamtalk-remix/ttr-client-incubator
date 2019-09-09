@@ -7,19 +7,19 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
+	"syscall"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gogo/protobuf/proto"
-	"github.com/shiywang/GoTalk/cmd/test-client/help"
-	"github.com/shiywang/GoTalk/pkg/pdubase"
-	b "github.com/shiywang/GoTalk/proto/IM_BaseDefine"
-	"github.com/shiywang/GoTalk/proto/IM_Login"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/cmd/test-client/help"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/pkg/pdubase"
+	b "github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_BaseDefine"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_Login"
 )
 
 //type testCommand struct {
@@ -70,118 +70,82 @@ func SendMsg(conn net.Conn, from, to uint32, s string) {
 func _HandleLoginResponse(pdu pdubase.CImPdu) {
 	msg := IM_Login.IMLoginRes{}
 	pdu.GetPBMsg(pdu.Buffer().Bytes(), &msg)
+	spew.Dump(msg.String())
 	spew.Dump("receive _HandleLoginResponse")
 	spew.Dump(msg.GetResultCode())
 	spew.Dump(msg.GetResultString())
 	spew.Dump(msg.GetUserInfo())
+
+	if msg.GetResultCode() == b.ResultType_REFUSE_REASON_NONE {
+
+	}
 }
 
+//func Timer
 func HandlePdu(pdu pdubase.CImPdu) {
-	switch b.CommandID(pdu.CommandId()) {
+	switch pdu.CommandId() {
 	case b.CommandID_CID_OTHER_HEARTBEAT:
+		println("HandlePdu:  heartbeat ")
 	case b.CommandID_CID_LOGIN_RES_USERLOGIN:
 		_HandleLoginResponse(pdu)
 	}
 }
 
-func testReceiveLoginResponse(conn net.Conn) {
-	headerBuf := make([]byte, pdubase.PduHeaderSize)
+func checkErr(err error) {
+	if err == nil {
+		println("Ok")
+		return
 
-	_, err := conn.Read(headerBuf)
-	if err != nil {
-		println("Breaking......:", err.Error())
-
+	} else if netError, ok := err.(net.Error); ok && netError.Timeout() {
+		println("Timeout")
+		return
 	}
 
-	var pdu pdubase.CImPdu
-	pdu.GetHeader(headerBuf)
-	pdu.Length()
-	bodyBuf := make([]byte, 100)
-	_, err = conn.Read(bodyBuf[:pdu.Length()-pdubase.PduHeaderSize])
-	if err != nil {
-		println("Breaking......:", err.Error())
+	switch t := err.(type) {
+	case *net.OpError:
+		if t.Op == "dial" {
+			println("Unknown host")
+		} else if t.Op == "read" {
+			println("Connection refused")
+		}
 
+	case syscall.Errno:
+		if t == syscall.ECONNREFUSED {
+			println("Connection refused")
+		}
 	}
-	msg := &IM_Login.IMLoginRes{}
-	err = proto.Unmarshal(bodyBuf, msg)
-	if err != nil {
-		log.Fatal("unmarshaling error: ", err)
-	}
-	spew.Dump(msg.String())
 }
 
-func realReciveLoop(conn net.Conn) {
-	/****************************************************************
-	 *  Read return value
-	 *
-	 *  syntax --
-	 *
-	 *
-	 *	bodyBuf:
-	 *		input buffer
-	 *
-	 *	return value:
-	 *		1. err:
-	 *			eg: connection closed by server
-	 * 		2. n:
-	 *			2.1   n < PduHeaderSize(16)
-	 *			2.2   n >= PduHeaderSize(16) && n - 16 < pdu.Length
-	 *			2.3   n > PduHeaderSize(16) && n - 16 >= pdu.Length
-	 *
-	******************************************************************/
-	var pdu pdubase.CImPdu
-	bodyBuf := make([]byte, pdubase.BufferSize)
-
-	headerBuf := make([]byte, pdubase.PduHeaderSize)
-	var pOffset int = 0
-	var l uint32 = 0
+func testReceiveLoginResponse(conn net.Conn) {
 	for {
-		//Parse pdu Header and Body
-		for {
-			n, err := conn.Read(headerBuf)
-			if err != nil {
-				println("Breaking......:", err.Error())
-				break
-			}
-			pOffset = pOffset + n
-			if pOffset >= pdubase.PduHeaderSize {
-				pdu.GetHeader(bodyBuf[pOffset:pdubase.PduHeaderSize])
-				l = pdu.Length()
-				break
-			}
+		headerBuf := make([]byte, pdubase.PduHeaderSize)
+		_, err := conn.Read(headerBuf)
+		if err != nil {
+			println("Breaking......:", err.Error())
+			checkErr(err)
+			break
 		}
 
-		for {
-			n, err := conn.Read(bodyBuf[:l])
-			if err != nil {
-				println("Breaking......:", err.Error())
-				break
-			}
-			pOffset = pOffset + n
-			if pOffset == pdubase.PduHeaderSize+int(l) {
-				break
-			}
+		//deal with heartbeat
+		var pdu pdubase.CImPdu
+		pdu.GetHeader(headerBuf)
+		pdu.Length()
+		spew.Dump(pdu)
+		bodyBuf := make([]byte, pdu.Length()-pdubase.PduHeaderSize)
+		_, err = conn.Read(bodyBuf[:pdu.Length()-pdubase.PduHeaderSize])
+		if err != nil {
+			println("Breaking......:", err.Error())
+			checkErr(err)
+			break
 		}
-
-		//if pOffset > pdubase.BufferSize which means one time Read() return from TCP stream
-		//is more than 2048 which bigger than TCP MTU 1500 bytes (which might have bugs)
-		if pOffset > pdubase.BufferSize {
-			panic("impossible package length...")
-		}
-
-		pdu.WriteBuffer(bodyBuf[0:l])
-		//HandlePdu
-		go HandlePdu(pdu)
-		//move buffer
-		copy(bodyBuf[0:], bodyBuf[pOffset:l])
-		//reset pOffset
-		//pOffset = pOffset - l
+		//copy
+		pdu.WriteBuffer(bodyBuf)
+		HandlePdu(pdu)
 	}
 }
 
 func recvMsg(conn net.Conn) {
 	fmt.Println("\n-> start lisiten.....")
-
 	testReceiveLoginResponse(conn)
 }
 
@@ -206,7 +170,6 @@ func login(conn net.Conn, userName, userPass string) {
 	pdu.SetServiceId(b.ServiceID_SID_LOGIN)
 	pdu.SetCommandId(b.CommandID_CID_LOGIN_REQ_USERLOGIN)
 	pdu.SetPB(msg)
-
 
 	_, err := conn.Write(pdu.Buffer().Bytes())
 	if err != nil {
