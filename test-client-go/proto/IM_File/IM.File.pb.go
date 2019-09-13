@@ -3,10 +3,12 @@
 
 package IM_File
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import IM_BaseDefine "github.com/shiywang/GoTalk/proto/IM_BaseDefine"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	IM_BaseDefine "github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_BaseDefine"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -17,10 +19,10 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type IMFileLoginReq struct {
-	// cmd id:	0x0501
+	//cmd id:	0x0501
 	UserId               *uint32                       `protobuf:"varint,1,req,name=user_id,json=userId" json:"user_id,omitempty"`
 	TaskId               *string                       `protobuf:"bytes,2,req,name=task_id,json=taskId" json:"task_id,omitempty"`
 	FileRole             *IM_BaseDefine.ClientFileRole `protobuf:"varint,3,req,name=file_role,json=fileRole,enum=IM.BaseDefine.ClientFileRole" json:"file_role,omitempty"`
@@ -33,16 +35,17 @@ func (m *IMFileLoginReq) Reset()         { *m = IMFileLoginReq{} }
 func (m *IMFileLoginReq) String() string { return proto.CompactTextString(m) }
 func (*IMFileLoginReq) ProtoMessage()    {}
 func (*IMFileLoginReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{0}
+	return fileDescriptor_84b5278598755559, []int{0}
 }
+
 func (m *IMFileLoginReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileLoginReq.Unmarshal(m, b)
 }
 func (m *IMFileLoginReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileLoginReq.Marshal(b, m, deterministic)
 }
-func (dst *IMFileLoginReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileLoginReq.Merge(dst, src)
+func (m *IMFileLoginReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileLoginReq.Merge(m, src)
 }
 func (m *IMFileLoginReq) XXX_Size() int {
 	return xxx_messageInfo_IMFileLoginReq.Size(m)
@@ -75,7 +78,7 @@ func (m *IMFileLoginReq) GetFileRole() IM_BaseDefine.ClientFileRole {
 }
 
 type IMFileLoginRsp struct {
-	// cmd id:	0x0502
+	//cmd id:	0x0502
 	ResultCode           *uint32  `protobuf:"varint,1,req,name=result_code,json=resultCode" json:"result_code,omitempty"`
 	TaskId               *string  `protobuf:"bytes,2,req,name=task_id,json=taskId" json:"task_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -87,16 +90,17 @@ func (m *IMFileLoginRsp) Reset()         { *m = IMFileLoginRsp{} }
 func (m *IMFileLoginRsp) String() string { return proto.CompactTextString(m) }
 func (*IMFileLoginRsp) ProtoMessage()    {}
 func (*IMFileLoginRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{1}
+	return fileDescriptor_84b5278598755559, []int{1}
 }
+
 func (m *IMFileLoginRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileLoginRsp.Unmarshal(m, b)
 }
 func (m *IMFileLoginRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileLoginRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMFileLoginRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileLoginRsp.Merge(dst, src)
+func (m *IMFileLoginRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileLoginRsp.Merge(m, src)
 }
 func (m *IMFileLoginRsp) XXX_Size() int {
 	return xxx_messageInfo_IMFileLoginRsp.Size(m)
@@ -122,7 +126,7 @@ func (m *IMFileLoginRsp) GetTaskId() string {
 }
 
 type IMFileState struct {
-	// cmd id: 	0x0503
+	//cmd id: 	0x0503
 	State                *IM_BaseDefine.ClientFileState `protobuf:"varint,1,req,name=state,enum=IM.BaseDefine.ClientFileState" json:"state,omitempty"`
 	TaskId               *string                        `protobuf:"bytes,2,req,name=task_id,json=taskId" json:"task_id,omitempty"`
 	UserId               *uint32                        `protobuf:"varint,3,req,name=user_id,json=userId" json:"user_id,omitempty"`
@@ -135,16 +139,17 @@ func (m *IMFileState) Reset()         { *m = IMFileState{} }
 func (m *IMFileState) String() string { return proto.CompactTextString(m) }
 func (*IMFileState) ProtoMessage()    {}
 func (*IMFileState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{2}
+	return fileDescriptor_84b5278598755559, []int{2}
 }
+
 func (m *IMFileState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileState.Unmarshal(m, b)
 }
 func (m *IMFileState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileState.Marshal(b, m, deterministic)
 }
-func (dst *IMFileState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileState.Merge(dst, src)
+func (m *IMFileState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileState.Merge(m, src)
 }
 func (m *IMFileState) XXX_Size() int {
 	return xxx_messageInfo_IMFileState.Size(m)
@@ -177,7 +182,7 @@ func (m *IMFileState) GetUserId() uint32 {
 }
 
 type IMFilePullDataReq struct {
-	// cmd id:	0x0504
+	//cmd id:	0x0504
 	TaskId               *string                         `protobuf:"bytes,1,req,name=task_id,json=taskId" json:"task_id,omitempty"`
 	UserId               *uint32                         `protobuf:"varint,2,req,name=user_id,json=userId" json:"user_id,omitempty"`
 	TransMode            *IM_BaseDefine.TransferFileType `protobuf:"varint,3,req,name=trans_mode,json=transMode,enum=IM.BaseDefine.TransferFileType" json:"trans_mode,omitempty"`
@@ -192,16 +197,17 @@ func (m *IMFilePullDataReq) Reset()         { *m = IMFilePullDataReq{} }
 func (m *IMFilePullDataReq) String() string { return proto.CompactTextString(m) }
 func (*IMFilePullDataReq) ProtoMessage()    {}
 func (*IMFilePullDataReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{3}
+	return fileDescriptor_84b5278598755559, []int{3}
 }
+
 func (m *IMFilePullDataReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFilePullDataReq.Unmarshal(m, b)
 }
 func (m *IMFilePullDataReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFilePullDataReq.Marshal(b, m, deterministic)
 }
-func (dst *IMFilePullDataReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFilePullDataReq.Merge(dst, src)
+func (m *IMFilePullDataReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFilePullDataReq.Merge(m, src)
 }
 func (m *IMFilePullDataReq) XXX_Size() int {
 	return xxx_messageInfo_IMFilePullDataReq.Size(m)
@@ -248,7 +254,7 @@ func (m *IMFilePullDataReq) GetDataSize() uint32 {
 }
 
 type IMFilePullDataRsp struct {
-	// cmd id: 	0x0505
+	//cmd id: 	0x0505
 	ResultCode           *uint32  `protobuf:"varint,1,req,name=result_code,json=resultCode" json:"result_code,omitempty"`
 	TaskId               *string  `protobuf:"bytes,2,req,name=task_id,json=taskId" json:"task_id,omitempty"`
 	UserId               *uint32  `protobuf:"varint,3,req,name=user_id,json=userId" json:"user_id,omitempty"`
@@ -263,16 +269,17 @@ func (m *IMFilePullDataRsp) Reset()         { *m = IMFilePullDataRsp{} }
 func (m *IMFilePullDataRsp) String() string { return proto.CompactTextString(m) }
 func (*IMFilePullDataRsp) ProtoMessage()    {}
 func (*IMFilePullDataRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{4}
+	return fileDescriptor_84b5278598755559, []int{4}
 }
+
 func (m *IMFilePullDataRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFilePullDataRsp.Unmarshal(m, b)
 }
 func (m *IMFilePullDataRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFilePullDataRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMFilePullDataRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFilePullDataRsp.Merge(dst, src)
+func (m *IMFilePullDataRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFilePullDataRsp.Merge(m, src)
 }
 func (m *IMFilePullDataRsp) XXX_Size() int {
 	return xxx_messageInfo_IMFilePullDataRsp.Size(m)
@@ -319,7 +326,7 @@ func (m *IMFilePullDataRsp) GetFileData() []byte {
 }
 
 type IMFileReq struct {
-	// cmd id: 	0x0506
+	//cmd id: 	0x0506
 	FromUserId           *uint32                         `protobuf:"varint,1,req,name=from_user_id,json=fromUserId" json:"from_user_id,omitempty"`
 	ToUserId             *uint32                         `protobuf:"varint,2,req,name=to_user_id,json=toUserId" json:"to_user_id,omitempty"`
 	FileName             *string                         `protobuf:"bytes,3,req,name=file_name,json=fileName" json:"file_name,omitempty"`
@@ -334,16 +341,17 @@ func (m *IMFileReq) Reset()         { *m = IMFileReq{} }
 func (m *IMFileReq) String() string { return proto.CompactTextString(m) }
 func (*IMFileReq) ProtoMessage()    {}
 func (*IMFileReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{5}
+	return fileDescriptor_84b5278598755559, []int{5}
 }
+
 func (m *IMFileReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileReq.Unmarshal(m, b)
 }
 func (m *IMFileReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileReq.Marshal(b, m, deterministic)
 }
-func (dst *IMFileReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileReq.Merge(dst, src)
+func (m *IMFileReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileReq.Merge(m, src)
 }
 func (m *IMFileReq) XXX_Size() int {
 	return xxx_messageInfo_IMFileReq.Size(m)
@@ -390,7 +398,7 @@ func (m *IMFileReq) GetTransMode() IM_BaseDefine.TransferFileType {
 }
 
 type IMFileRsp struct {
-	// cmd id: 	0x0507
+	//cmd id: 	0x0507
 	ResultCode           *uint32                         `protobuf:"varint,1,req,name=result_code,json=resultCode" json:"result_code,omitempty"`
 	FromUserId           *uint32                         `protobuf:"varint,2,req,name=from_user_id,json=fromUserId" json:"from_user_id,omitempty"`
 	ToUserId             *uint32                         `protobuf:"varint,3,req,name=to_user_id,json=toUserId" json:"to_user_id,omitempty"`
@@ -407,16 +415,17 @@ func (m *IMFileRsp) Reset()         { *m = IMFileRsp{} }
 func (m *IMFileRsp) String() string { return proto.CompactTextString(m) }
 func (*IMFileRsp) ProtoMessage()    {}
 func (*IMFileRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{6}
+	return fileDescriptor_84b5278598755559, []int{6}
 }
+
 func (m *IMFileRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileRsp.Unmarshal(m, b)
 }
 func (m *IMFileRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMFileRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileRsp.Merge(dst, src)
+func (m *IMFileRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileRsp.Merge(m, src)
 }
 func (m *IMFileRsp) XXX_Size() int {
 	return xxx_messageInfo_IMFileRsp.Size(m)
@@ -477,7 +486,7 @@ func (m *IMFileRsp) GetTransMode() IM_BaseDefine.TransferFileType {
 }
 
 type IMFileNotify struct {
-	// cmd id: 	0x0508
+	//cmd id: 	0x0508
 	FromUserId           *uint32                         `protobuf:"varint,1,req,name=from_user_id,json=fromUserId" json:"from_user_id,omitempty"`
 	ToUserId             *uint32                         `protobuf:"varint,2,req,name=to_user_id,json=toUserId" json:"to_user_id,omitempty"`
 	FileName             *string                         `protobuf:"bytes,3,req,name=file_name,json=fileName" json:"file_name,omitempty"`
@@ -495,16 +504,17 @@ func (m *IMFileNotify) Reset()         { *m = IMFileNotify{} }
 func (m *IMFileNotify) String() string { return proto.CompactTextString(m) }
 func (*IMFileNotify) ProtoMessage()    {}
 func (*IMFileNotify) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{7}
+	return fileDescriptor_84b5278598755559, []int{7}
 }
+
 func (m *IMFileNotify) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileNotify.Unmarshal(m, b)
 }
 func (m *IMFileNotify) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileNotify.Marshal(b, m, deterministic)
 }
-func (dst *IMFileNotify) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileNotify.Merge(dst, src)
+func (m *IMFileNotify) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileNotify.Merge(m, src)
 }
 func (m *IMFileNotify) XXX_Size() int {
 	return xxx_messageInfo_IMFileNotify.Size(m)
@@ -572,7 +582,7 @@ func (m *IMFileNotify) GetOfflineReady() uint32 {
 }
 
 type IMFileHasOfflineReq struct {
-	// cmd id: 	0x0509
+	//cmd id: 	0x0509
 	UserId               *uint32  `protobuf:"varint,1,req,name=user_id,json=userId" json:"user_id,omitempty"`
 	AttachData           []byte   `protobuf:"bytes,20,opt,name=attach_data,json=attachData" json:"attach_data,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -584,16 +594,17 @@ func (m *IMFileHasOfflineReq) Reset()         { *m = IMFileHasOfflineReq{} }
 func (m *IMFileHasOfflineReq) String() string { return proto.CompactTextString(m) }
 func (*IMFileHasOfflineReq) ProtoMessage()    {}
 func (*IMFileHasOfflineReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{8}
+	return fileDescriptor_84b5278598755559, []int{8}
 }
+
 func (m *IMFileHasOfflineReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileHasOfflineReq.Unmarshal(m, b)
 }
 func (m *IMFileHasOfflineReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileHasOfflineReq.Marshal(b, m, deterministic)
 }
-func (dst *IMFileHasOfflineReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileHasOfflineReq.Merge(dst, src)
+func (m *IMFileHasOfflineReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileHasOfflineReq.Merge(m, src)
 }
 func (m *IMFileHasOfflineReq) XXX_Size() int {
 	return xxx_messageInfo_IMFileHasOfflineReq.Size(m)
@@ -619,7 +630,7 @@ func (m *IMFileHasOfflineReq) GetAttachData() []byte {
 }
 
 type IMFileHasOfflineRsp struct {
-	// cmd id:	0x050a
+	//cmd id:	0x050a
 	UserId               *uint32                          `protobuf:"varint,1,req,name=user_id,json=userId" json:"user_id,omitempty"`
 	OfflineFileList      []*IM_BaseDefine.OfflineFileInfo `protobuf:"bytes,2,rep,name=offline_file_list,json=offlineFileList" json:"offline_file_list,omitempty"`
 	IpAddrList           []*IM_BaseDefine.IpAddr          `protobuf:"bytes,3,rep,name=ip_addr_list,json=ipAddrList" json:"ip_addr_list,omitempty"`
@@ -633,16 +644,17 @@ func (m *IMFileHasOfflineRsp) Reset()         { *m = IMFileHasOfflineRsp{} }
 func (m *IMFileHasOfflineRsp) String() string { return proto.CompactTextString(m) }
 func (*IMFileHasOfflineRsp) ProtoMessage()    {}
 func (*IMFileHasOfflineRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{9}
+	return fileDescriptor_84b5278598755559, []int{9}
 }
+
 func (m *IMFileHasOfflineRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileHasOfflineRsp.Unmarshal(m, b)
 }
 func (m *IMFileHasOfflineRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileHasOfflineRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMFileHasOfflineRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileHasOfflineRsp.Merge(dst, src)
+func (m *IMFileHasOfflineRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileHasOfflineRsp.Merge(m, src)
 }
 func (m *IMFileHasOfflineRsp) XXX_Size() int {
 	return xxx_messageInfo_IMFileHasOfflineRsp.Size(m)
@@ -682,7 +694,7 @@ func (m *IMFileHasOfflineRsp) GetAttachData() []byte {
 }
 
 type IMFileAddOfflineReq struct {
-	// cmd id:	0x050b
+	//cmd id:	0x050b
 	FromUserId           *uint32  `protobuf:"varint,1,req,name=from_user_id,json=fromUserId" json:"from_user_id,omitempty"`
 	ToUserId             *uint32  `protobuf:"varint,2,req,name=to_user_id,json=toUserId" json:"to_user_id,omitempty"`
 	TaskId               *string  `protobuf:"bytes,3,req,name=task_id,json=taskId" json:"task_id,omitempty"`
@@ -697,16 +709,17 @@ func (m *IMFileAddOfflineReq) Reset()         { *m = IMFileAddOfflineReq{} }
 func (m *IMFileAddOfflineReq) String() string { return proto.CompactTextString(m) }
 func (*IMFileAddOfflineReq) ProtoMessage()    {}
 func (*IMFileAddOfflineReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{10}
+	return fileDescriptor_84b5278598755559, []int{10}
 }
+
 func (m *IMFileAddOfflineReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileAddOfflineReq.Unmarshal(m, b)
 }
 func (m *IMFileAddOfflineReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileAddOfflineReq.Marshal(b, m, deterministic)
 }
-func (dst *IMFileAddOfflineReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileAddOfflineReq.Merge(dst, src)
+func (m *IMFileAddOfflineReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileAddOfflineReq.Merge(m, src)
 }
 func (m *IMFileAddOfflineReq) XXX_Size() int {
 	return xxx_messageInfo_IMFileAddOfflineReq.Size(m)
@@ -753,7 +766,7 @@ func (m *IMFileAddOfflineReq) GetFileSize() uint32 {
 }
 
 type IMFileDelOfflineReq struct {
-	// cmd id:	0x050c
+	//cmd id:	0x050c
 	FromUserId           *uint32  `protobuf:"varint,1,req,name=from_user_id,json=fromUserId" json:"from_user_id,omitempty"`
 	ToUserId             *uint32  `protobuf:"varint,2,req,name=to_user_id,json=toUserId" json:"to_user_id,omitempty"`
 	TaskId               *string  `protobuf:"bytes,3,req,name=task_id,json=taskId" json:"task_id,omitempty"`
@@ -766,16 +779,17 @@ func (m *IMFileDelOfflineReq) Reset()         { *m = IMFileDelOfflineReq{} }
 func (m *IMFileDelOfflineReq) String() string { return proto.CompactTextString(m) }
 func (*IMFileDelOfflineReq) ProtoMessage()    {}
 func (*IMFileDelOfflineReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_File_881fa908902f7caa, []int{11}
+	return fileDescriptor_84b5278598755559, []int{11}
 }
+
 func (m *IMFileDelOfflineReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileDelOfflineReq.Unmarshal(m, b)
 }
 func (m *IMFileDelOfflineReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileDelOfflineReq.Marshal(b, m, deterministic)
 }
-func (dst *IMFileDelOfflineReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileDelOfflineReq.Merge(dst, src)
+func (m *IMFileDelOfflineReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileDelOfflineReq.Merge(m, src)
 }
 func (m *IMFileDelOfflineReq) XXX_Size() int {
 	return xxx_messageInfo_IMFileDelOfflineReq.Size(m)
@@ -822,9 +836,9 @@ func init() {
 	proto.RegisterType((*IMFileDelOfflineReq)(nil), "IM.File.IMFileDelOfflineReq")
 }
 
-func init() { proto.RegisterFile("IM.File.proto", fileDescriptor_IM_File_881fa908902f7caa) }
+func init() { proto.RegisterFile("IM.File.proto", fileDescriptor_84b5278598755559) }
 
-var fileDescriptor_IM_File_881fa908902f7caa = []byte{
+var fileDescriptor_84b5278598755559 = []byte{
 	// 628 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x94, 0xcf, 0x6e, 0xd3, 0x4e,
 	0x10, 0xc7, 0x65, 0xbb, 0x49, 0xe3, 0x89, 0x93, 0x9f, 0xea, 0xfe, 0x00, 0x8b, 0x7f, 0xb1, 0xcc,
