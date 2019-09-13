@@ -3,9 +3,11 @@
 
 package IM_SwitchService
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -16,10 +18,10 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type IMP2PCmdMsg struct {
-	// cmd id:		0x0601
+	//cmd id:		0x0601
 	FromUserId           *uint32  `protobuf:"varint,1,req,name=from_user_id,json=fromUserId" json:"from_user_id,omitempty"`
 	ToUserId             *uint32  `protobuf:"varint,2,req,name=to_user_id,json=toUserId" json:"to_user_id,omitempty"`
 	CmdMsgData           *string  `protobuf:"bytes,3,req,name=cmd_msg_data,json=cmdMsgData" json:"cmd_msg_data,omitempty"`
@@ -32,16 +34,17 @@ func (m *IMP2PCmdMsg) Reset()         { *m = IMP2PCmdMsg{} }
 func (m *IMP2PCmdMsg) String() string { return proto.CompactTextString(m) }
 func (*IMP2PCmdMsg) ProtoMessage()    {}
 func (*IMP2PCmdMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_SwitchService_5f11c32771b5fbae, []int{0}
+	return fileDescriptor_0c716a1b0c78d8d7, []int{0}
 }
+
 func (m *IMP2PCmdMsg) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMP2PCmdMsg.Unmarshal(m, b)
 }
 func (m *IMP2PCmdMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMP2PCmdMsg.Marshal(b, m, deterministic)
 }
-func (dst *IMP2PCmdMsg) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMP2PCmdMsg.Merge(dst, src)
+func (m *IMP2PCmdMsg) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMP2PCmdMsg.Merge(m, src)
 }
 func (m *IMP2PCmdMsg) XXX_Size() int {
 	return xxx_messageInfo_IMP2PCmdMsg.Size(m)
@@ -77,11 +80,9 @@ func init() {
 	proto.RegisterType((*IMP2PCmdMsg)(nil), "IM.SwitchService.IMP2PCmdMsg")
 }
 
-func init() {
-	proto.RegisterFile("IM.SwitchService.proto", fileDescriptor_IM_SwitchService_5f11c32771b5fbae)
-}
+func init() { proto.RegisterFile("IM.SwitchService.proto", fileDescriptor_0c716a1b0c78d8d7) }
 
-var fileDescriptor_IM_SwitchService_5f11c32771b5fbae = []byte{
+var fileDescriptor_0c716a1b0c78d8d7 = []byte{
 	// 149 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xf3, 0xf4, 0xd5, 0x0b,
 	0x2e, 0xcf, 0x2c, 0x49, 0xce, 0x08, 0x4e, 0x2d, 0x2a, 0xcb, 0x4c, 0x4e, 0xd5, 0x2b, 0x28, 0xca,

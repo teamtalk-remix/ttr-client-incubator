@@ -3,10 +3,12 @@
 
 package IM_Server
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import IM_BaseDefine "github.com/shiywang/GoTalk/proto/IM_BaseDefine"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	IM_BaseDefine "github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_BaseDefine"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -17,11 +19,11 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// db_proxy
+//db_proxy
 type IMStopReceivePacket struct {
-	// cmd id:   0x0702
+	//cmd id:   0x0702
 	Result               *uint32  `protobuf:"varint,1,req,name=result" json:"result,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -32,16 +34,17 @@ func (m *IMStopReceivePacket) Reset()         { *m = IMStopReceivePacket{} }
 func (m *IMStopReceivePacket) String() string { return proto.CompactTextString(m) }
 func (*IMStopReceivePacket) ProtoMessage()    {}
 func (*IMStopReceivePacket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{0}
+	return fileDescriptor_97402e2eff85109c, []int{0}
 }
+
 func (m *IMStopReceivePacket) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMStopReceivePacket.Unmarshal(m, b)
 }
 func (m *IMStopReceivePacket) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMStopReceivePacket.Marshal(b, m, deterministic)
 }
-func (dst *IMStopReceivePacket) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMStopReceivePacket.Merge(dst, src)
+func (m *IMStopReceivePacket) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMStopReceivePacket.Merge(m, src)
 }
 func (m *IMStopReceivePacket) XXX_Size() int {
 	return xxx_messageInfo_IMStopReceivePacket.Size(m)
@@ -59,9 +62,9 @@ func (m *IMStopReceivePacket) GetResult() uint32 {
 	return 0
 }
 
-// db_proxy
+//db_proxy
 type IMValidateReq struct {
-	// cmd id:	0x0703
+	//cmd id:	0x0703
 	UserName             *string  `protobuf:"bytes,1,req,name=user_name,json=userName" json:"user_name,omitempty"`
 	Password             *string  `protobuf:"bytes,2,req,name=password" json:"password,omitempty"`
 	AttachData           []byte   `protobuf:"bytes,20,opt,name=attach_data,json=attachData" json:"attach_data,omitempty"`
@@ -74,16 +77,17 @@ func (m *IMValidateReq) Reset()         { *m = IMValidateReq{} }
 func (m *IMValidateReq) String() string { return proto.CompactTextString(m) }
 func (*IMValidateReq) ProtoMessage()    {}
 func (*IMValidateReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{1}
+	return fileDescriptor_97402e2eff85109c, []int{1}
 }
+
 func (m *IMValidateReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMValidateReq.Unmarshal(m, b)
 }
 func (m *IMValidateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMValidateReq.Marshal(b, m, deterministic)
 }
-func (dst *IMValidateReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMValidateReq.Merge(dst, src)
+func (m *IMValidateReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMValidateReq.Merge(m, src)
 }
 func (m *IMValidateReq) XXX_Size() int {
 	return xxx_messageInfo_IMValidateReq.Size(m)
@@ -115,9 +119,9 @@ func (m *IMValidateReq) GetAttachData() []byte {
 	return nil
 }
 
-// db_proxy
+//db_proxy
 type IMValidateRsp struct {
-	// cmd id:	0x0704
+	//cmd id:	0x0704
 	UserName             *string                 `protobuf:"bytes,1,req,name=user_name,json=userName" json:"user_name,omitempty"`
 	ResultCode           *uint32                 `protobuf:"varint,2,req,name=result_code,json=resultCode" json:"result_code,omitempty"`
 	ResultString         *string                 `protobuf:"bytes,3,opt,name=result_string,json=resultString" json:"result_string,omitempty"`
@@ -132,16 +136,17 @@ func (m *IMValidateRsp) Reset()         { *m = IMValidateRsp{} }
 func (m *IMValidateRsp) String() string { return proto.CompactTextString(m) }
 func (*IMValidateRsp) ProtoMessage()    {}
 func (*IMValidateRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{2}
+	return fileDescriptor_97402e2eff85109c, []int{2}
 }
+
 func (m *IMValidateRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMValidateRsp.Unmarshal(m, b)
 }
 func (m *IMValidateRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMValidateRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMValidateRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMValidateRsp.Merge(dst, src)
+func (m *IMValidateRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMValidateRsp.Merge(m, src)
 }
 func (m *IMValidateRsp) XXX_Size() int {
 	return xxx_messageInfo_IMValidateRsp.Size(m)
@@ -187,9 +192,9 @@ func (m *IMValidateRsp) GetAttachData() []byte {
 	return nil
 }
 
-// db_proxy
+//db_proxy
 type IMGetDeviceTokenReq struct {
-	// cmd id:	0x0705
+	//cmd id:	0x0705
 	UserId               []uint32 `protobuf:"varint,1,rep,name=user_id,json=userId" json:"user_id,omitempty"`
 	AttachData           []byte   `protobuf:"bytes,20,opt,name=attach_data,json=attachData" json:"attach_data,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -201,16 +206,17 @@ func (m *IMGetDeviceTokenReq) Reset()         { *m = IMGetDeviceTokenReq{} }
 func (m *IMGetDeviceTokenReq) String() string { return proto.CompactTextString(m) }
 func (*IMGetDeviceTokenReq) ProtoMessage()    {}
 func (*IMGetDeviceTokenReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{3}
+	return fileDescriptor_97402e2eff85109c, []int{3}
 }
+
 func (m *IMGetDeviceTokenReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMGetDeviceTokenReq.Unmarshal(m, b)
 }
 func (m *IMGetDeviceTokenReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMGetDeviceTokenReq.Marshal(b, m, deterministic)
 }
-func (dst *IMGetDeviceTokenReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMGetDeviceTokenReq.Merge(dst, src)
+func (m *IMGetDeviceTokenReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMGetDeviceTokenReq.Merge(m, src)
 }
 func (m *IMGetDeviceTokenReq) XXX_Size() int {
 	return xxx_messageInfo_IMGetDeviceTokenReq.Size(m)
@@ -235,9 +241,9 @@ func (m *IMGetDeviceTokenReq) GetAttachData() []byte {
 	return nil
 }
 
-// db_proxy
+//db_proxy
 type IMGetDeviceTokenRsp struct {
-	// cmd id:	0x0706
+	//cmd id:	0x0706
 	UserTokenInfo        []*IM_BaseDefine.UserTokenInfo `protobuf:"bytes,1,rep,name=user_token_info,json=userTokenInfo" json:"user_token_info,omitempty"`
 	AttachData           []byte                         `protobuf:"bytes,20,opt,name=attach_data,json=attachData" json:"attach_data,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
@@ -249,16 +255,17 @@ func (m *IMGetDeviceTokenRsp) Reset()         { *m = IMGetDeviceTokenRsp{} }
 func (m *IMGetDeviceTokenRsp) String() string { return proto.CompactTextString(m) }
 func (*IMGetDeviceTokenRsp) ProtoMessage()    {}
 func (*IMGetDeviceTokenRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{4}
+	return fileDescriptor_97402e2eff85109c, []int{4}
 }
+
 func (m *IMGetDeviceTokenRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMGetDeviceTokenRsp.Unmarshal(m, b)
 }
 func (m *IMGetDeviceTokenRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMGetDeviceTokenRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMGetDeviceTokenRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMGetDeviceTokenRsp.Merge(dst, src)
+func (m *IMGetDeviceTokenRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMGetDeviceTokenRsp.Merge(m, src)
 }
 func (m *IMGetDeviceTokenRsp) XXX_Size() int {
 	return xxx_messageInfo_IMGetDeviceTokenRsp.Size(m)
@@ -284,7 +291,7 @@ func (m *IMGetDeviceTokenRsp) GetAttachData() []byte {
 }
 
 type IMRoleSet struct {
-	// cmd id:	0x0707
+	//cmd id:	0x0707
 	Master               *uint32  `protobuf:"varint,1,req,name=master" json:"master,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -295,16 +302,17 @@ func (m *IMRoleSet) Reset()         { *m = IMRoleSet{} }
 func (m *IMRoleSet) String() string { return proto.CompactTextString(m) }
 func (*IMRoleSet) ProtoMessage()    {}
 func (*IMRoleSet) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{5}
+	return fileDescriptor_97402e2eff85109c, []int{5}
 }
+
 func (m *IMRoleSet) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMRoleSet.Unmarshal(m, b)
 }
 func (m *IMRoleSet) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMRoleSet.Marshal(b, m, deterministic)
 }
-func (dst *IMRoleSet) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMRoleSet.Merge(dst, src)
+func (m *IMRoleSet) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMRoleSet.Merge(m, src)
 }
 func (m *IMRoleSet) XXX_Size() int {
 	return xxx_messageInfo_IMRoleSet.Size(m)
@@ -323,7 +331,7 @@ func (m *IMRoleSet) GetMaster() uint32 {
 }
 
 type IMOnlineUserInfo struct {
-	// cmd id:	0x0708
+	//cmd id:	0x0708
 	UserStatList         []*IM_BaseDefine.ServerUserStat `protobuf:"bytes,1,rep,name=user_stat_list,json=userStatList" json:"user_stat_list,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                        `json:"-"`
 	XXX_unrecognized     []byte                          `json:"-"`
@@ -334,16 +342,17 @@ func (m *IMOnlineUserInfo) Reset()         { *m = IMOnlineUserInfo{} }
 func (m *IMOnlineUserInfo) String() string { return proto.CompactTextString(m) }
 func (*IMOnlineUserInfo) ProtoMessage()    {}
 func (*IMOnlineUserInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{6}
+	return fileDescriptor_97402e2eff85109c, []int{6}
 }
+
 func (m *IMOnlineUserInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMOnlineUserInfo.Unmarshal(m, b)
 }
 func (m *IMOnlineUserInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMOnlineUserInfo.Marshal(b, m, deterministic)
 }
-func (dst *IMOnlineUserInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMOnlineUserInfo.Merge(dst, src)
+func (m *IMOnlineUserInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMOnlineUserInfo.Merge(m, src)
 }
 func (m *IMOnlineUserInfo) XXX_Size() int {
 	return xxx_messageInfo_IMOnlineUserInfo.Size(m)
@@ -362,7 +371,7 @@ func (m *IMOnlineUserInfo) GetUserStatList() []*IM_BaseDefine.ServerUserStat {
 }
 
 type IMMsgServInfo struct {
-	// cmd id:	0x0709
+	//cmd id:	0x0709
 	Ip1                  *string  `protobuf:"bytes,1,req,name=ip1" json:"ip1,omitempty"`
 	Ip2                  *string  `protobuf:"bytes,2,req,name=ip2" json:"ip2,omitempty"`
 	Port                 *uint32  `protobuf:"varint,3,req,name=port" json:"port,omitempty"`
@@ -378,16 +387,17 @@ func (m *IMMsgServInfo) Reset()         { *m = IMMsgServInfo{} }
 func (m *IMMsgServInfo) String() string { return proto.CompactTextString(m) }
 func (*IMMsgServInfo) ProtoMessage()    {}
 func (*IMMsgServInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{7}
+	return fileDescriptor_97402e2eff85109c, []int{7}
 }
+
 func (m *IMMsgServInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMMsgServInfo.Unmarshal(m, b)
 }
 func (m *IMMsgServInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMMsgServInfo.Marshal(b, m, deterministic)
 }
-func (dst *IMMsgServInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMMsgServInfo.Merge(dst, src)
+func (m *IMMsgServInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMMsgServInfo.Merge(m, src)
 }
 func (m *IMMsgServInfo) XXX_Size() int {
 	return xxx_messageInfo_IMMsgServInfo.Size(m)
@@ -441,7 +451,7 @@ func (m *IMMsgServInfo) GetHostName() string {
 }
 
 type IMUserStatusUpdate struct {
-	// cmd id:	0x070a
+	//cmd id:	0x070a
 	UserStatus           *uint32                   `protobuf:"varint,1,req,name=user_status,json=userStatus" json:"user_status,omitempty"`
 	UserId               *uint32                   `protobuf:"varint,2,req,name=user_id,json=userId" json:"user_id,omitempty"`
 	ClientType           *IM_BaseDefine.ClientType `protobuf:"varint,3,req,name=client_type,json=clientType,enum=IM.BaseDefine.ClientType" json:"client_type,omitempty"`
@@ -454,16 +464,17 @@ func (m *IMUserStatusUpdate) Reset()         { *m = IMUserStatusUpdate{} }
 func (m *IMUserStatusUpdate) String() string { return proto.CompactTextString(m) }
 func (*IMUserStatusUpdate) ProtoMessage()    {}
 func (*IMUserStatusUpdate) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{8}
+	return fileDescriptor_97402e2eff85109c, []int{8}
 }
+
 func (m *IMUserStatusUpdate) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMUserStatusUpdate.Unmarshal(m, b)
 }
 func (m *IMUserStatusUpdate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMUserStatusUpdate.Marshal(b, m, deterministic)
 }
-func (dst *IMUserStatusUpdate) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMUserStatusUpdate.Merge(dst, src)
+func (m *IMUserStatusUpdate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMUserStatusUpdate.Merge(m, src)
 }
 func (m *IMUserStatusUpdate) XXX_Size() int {
 	return xxx_messageInfo_IMUserStatusUpdate.Size(m)
@@ -496,7 +507,7 @@ func (m *IMUserStatusUpdate) GetClientType() IM_BaseDefine.ClientType {
 }
 
 type IMUserCntUpdate struct {
-	// cmd id:	0x070b
+	//cmd id:	0x070b
 	UserAction           *uint32  `protobuf:"varint,1,req,name=user_action,json=userAction" json:"user_action,omitempty"`
 	UserId               *uint32  `protobuf:"varint,2,req,name=user_id,json=userId" json:"user_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -508,16 +519,17 @@ func (m *IMUserCntUpdate) Reset()         { *m = IMUserCntUpdate{} }
 func (m *IMUserCntUpdate) String() string { return proto.CompactTextString(m) }
 func (*IMUserCntUpdate) ProtoMessage()    {}
 func (*IMUserCntUpdate) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{9}
+	return fileDescriptor_97402e2eff85109c, []int{9}
 }
+
 func (m *IMUserCntUpdate) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMUserCntUpdate.Unmarshal(m, b)
 }
 func (m *IMUserCntUpdate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMUserCntUpdate.Marshal(b, m, deterministic)
 }
-func (dst *IMUserCntUpdate) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMUserCntUpdate.Merge(dst, src)
+func (m *IMUserCntUpdate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMUserCntUpdate.Merge(m, src)
 }
 func (m *IMUserCntUpdate) XXX_Size() int {
 	return xxx_messageInfo_IMUserCntUpdate.Size(m)
@@ -543,7 +555,7 @@ func (m *IMUserCntUpdate) GetUserId() uint32 {
 }
 
 type IMServerKickUser struct {
-	// cmd id:	0x070d
+	//cmd id:	0x070d
 	UserId               *uint32                   `protobuf:"varint,1,req,name=user_id,json=userId" json:"user_id,omitempty"`
 	ClientType           *IM_BaseDefine.ClientType `protobuf:"varint,2,req,name=client_type,json=clientType,enum=IM.BaseDefine.ClientType" json:"client_type,omitempty"`
 	Reason               *uint32                   `protobuf:"varint,3,req,name=reason" json:"reason,omitempty"`
@@ -556,16 +568,17 @@ func (m *IMServerKickUser) Reset()         { *m = IMServerKickUser{} }
 func (m *IMServerKickUser) String() string { return proto.CompactTextString(m) }
 func (*IMServerKickUser) ProtoMessage()    {}
 func (*IMServerKickUser) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{10}
+	return fileDescriptor_97402e2eff85109c, []int{10}
 }
+
 func (m *IMServerKickUser) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMServerKickUser.Unmarshal(m, b)
 }
 func (m *IMServerKickUser) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMServerKickUser.Marshal(b, m, deterministic)
 }
-func (dst *IMServerKickUser) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMServerKickUser.Merge(dst, src)
+func (m *IMServerKickUser) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMServerKickUser.Merge(m, src)
 }
 func (m *IMServerKickUser) XXX_Size() int {
 	return xxx_messageInfo_IMServerKickUser.Size(m)
@@ -598,7 +611,7 @@ func (m *IMServerKickUser) GetReason() uint32 {
 }
 
 type IMServerPCLoginStatusNotify struct {
-	// cmd id:	0x070e
+	//cmd id:	0x070e
 	UserId               *uint32  `protobuf:"varint,1,req,name=user_id,json=userId" json:"user_id,omitempty"`
 	LoginStatus          *uint32  `protobuf:"varint,2,req,name=login_status,json=loginStatus" json:"login_status,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -610,16 +623,17 @@ func (m *IMServerPCLoginStatusNotify) Reset()         { *m = IMServerPCLoginStat
 func (m *IMServerPCLoginStatusNotify) String() string { return proto.CompactTextString(m) }
 func (*IMServerPCLoginStatusNotify) ProtoMessage()    {}
 func (*IMServerPCLoginStatusNotify) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{11}
+	return fileDescriptor_97402e2eff85109c, []int{11}
 }
+
 func (m *IMServerPCLoginStatusNotify) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMServerPCLoginStatusNotify.Unmarshal(m, b)
 }
 func (m *IMServerPCLoginStatusNotify) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMServerPCLoginStatusNotify.Marshal(b, m, deterministic)
 }
-func (dst *IMServerPCLoginStatusNotify) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMServerPCLoginStatusNotify.Merge(dst, src)
+func (m *IMServerPCLoginStatusNotify) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMServerPCLoginStatusNotify.Merge(m, src)
 }
 func (m *IMServerPCLoginStatusNotify) XXX_Size() int {
 	return xxx_messageInfo_IMServerPCLoginStatusNotify.Size(m)
@@ -645,7 +659,7 @@ func (m *IMServerPCLoginStatusNotify) GetLoginStatus() uint32 {
 }
 
 type IMPushToUserReq struct {
-	// cmd id:	0x070f
+	//cmd id:	0x070f
 	Flash                *string                        `protobuf:"bytes,1,req,name=flash" json:"flash,omitempty"`
 	Data                 *string                        `protobuf:"bytes,2,req,name=data" json:"data,omitempty"`
 	UserTokenList        []*IM_BaseDefine.UserTokenInfo `protobuf:"bytes,3,rep,name=user_token_list,json=userTokenList" json:"user_token_list,omitempty"`
@@ -658,16 +672,17 @@ func (m *IMPushToUserReq) Reset()         { *m = IMPushToUserReq{} }
 func (m *IMPushToUserReq) String() string { return proto.CompactTextString(m) }
 func (*IMPushToUserReq) ProtoMessage()    {}
 func (*IMPushToUserReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{12}
+	return fileDescriptor_97402e2eff85109c, []int{12}
 }
+
 func (m *IMPushToUserReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMPushToUserReq.Unmarshal(m, b)
 }
 func (m *IMPushToUserReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMPushToUserReq.Marshal(b, m, deterministic)
 }
-func (dst *IMPushToUserReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMPushToUserReq.Merge(dst, src)
+func (m *IMPushToUserReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMPushToUserReq.Merge(m, src)
 }
 func (m *IMPushToUserReq) XXX_Size() int {
 	return xxx_messageInfo_IMPushToUserReq.Size(m)
@@ -700,7 +715,7 @@ func (m *IMPushToUserReq) GetUserTokenList() []*IM_BaseDefine.UserTokenInfo {
 }
 
 type IMPushToUserRsp struct {
-	// cmd id:	0x0710
+	//cmd id:	0x0710
 	PushResultList       []*IM_BaseDefine.PushResult `protobuf:"bytes,1,rep,name=push_result_list,json=pushResultList" json:"push_result_list,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
 	XXX_unrecognized     []byte                      `json:"-"`
@@ -711,16 +726,17 @@ func (m *IMPushToUserRsp) Reset()         { *m = IMPushToUserRsp{} }
 func (m *IMPushToUserRsp) String() string { return proto.CompactTextString(m) }
 func (*IMPushToUserRsp) ProtoMessage()    {}
 func (*IMPushToUserRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{13}
+	return fileDescriptor_97402e2eff85109c, []int{13}
 }
+
 func (m *IMPushToUserRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMPushToUserRsp.Unmarshal(m, b)
 }
 func (m *IMPushToUserRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMPushToUserRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMPushToUserRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMPushToUserRsp.Merge(dst, src)
+func (m *IMPushToUserRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMPushToUserRsp.Merge(m, src)
 }
 func (m *IMPushToUserRsp) XXX_Size() int {
 	return xxx_messageInfo_IMPushToUserRsp.Size(m)
@@ -739,7 +755,7 @@ func (m *IMPushToUserRsp) GetPushResultList() []*IM_BaseDefine.PushResult {
 }
 
 type IMGroupGetShieldReq struct {
-	// cmd id:			0x0711
+	//cmd id:			0x0711
 	GroupId              *uint32  `protobuf:"varint,1,req,name=group_id,json=groupId" json:"group_id,omitempty"`
 	UserId               []uint32 `protobuf:"varint,2,rep,name=user_id,json=userId" json:"user_id,omitempty"`
 	AttachData           []byte   `protobuf:"bytes,20,opt,name=attach_data,json=attachData" json:"attach_data,omitempty"`
@@ -752,16 +768,17 @@ func (m *IMGroupGetShieldReq) Reset()         { *m = IMGroupGetShieldReq{} }
 func (m *IMGroupGetShieldReq) String() string { return proto.CompactTextString(m) }
 func (*IMGroupGetShieldReq) ProtoMessage()    {}
 func (*IMGroupGetShieldReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{14}
+	return fileDescriptor_97402e2eff85109c, []int{14}
 }
+
 func (m *IMGroupGetShieldReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMGroupGetShieldReq.Unmarshal(m, b)
 }
 func (m *IMGroupGetShieldReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMGroupGetShieldReq.Marshal(b, m, deterministic)
 }
-func (dst *IMGroupGetShieldReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMGroupGetShieldReq.Merge(dst, src)
+func (m *IMGroupGetShieldReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMGroupGetShieldReq.Merge(m, src)
 }
 func (m *IMGroupGetShieldReq) XXX_Size() int {
 	return xxx_messageInfo_IMGroupGetShieldReq.Size(m)
@@ -794,7 +811,7 @@ func (m *IMGroupGetShieldReq) GetAttachData() []byte {
 }
 
 type IMGroupGetShieldRsp struct {
-	// cmd id: 			0x0712
+	//cmd id: 			0x0712
 	GroupId              *uint32                       `protobuf:"varint,1,req,name=group_id,json=groupId" json:"group_id,omitempty"`
 	ShieldStatusList     []*IM_BaseDefine.ShieldStatus `protobuf:"bytes,2,rep,name=shield_status_list,json=shieldStatusList" json:"shield_status_list,omitempty"`
 	AttachData           []byte                        `protobuf:"bytes,20,opt,name=attach_data,json=attachData" json:"attach_data,omitempty"`
@@ -807,16 +824,17 @@ func (m *IMGroupGetShieldRsp) Reset()         { *m = IMGroupGetShieldRsp{} }
 func (m *IMGroupGetShieldRsp) String() string { return proto.CompactTextString(m) }
 func (*IMGroupGetShieldRsp) ProtoMessage()    {}
 func (*IMGroupGetShieldRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{15}
+	return fileDescriptor_97402e2eff85109c, []int{15}
 }
+
 func (m *IMGroupGetShieldRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMGroupGetShieldRsp.Unmarshal(m, b)
 }
 func (m *IMGroupGetShieldRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMGroupGetShieldRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMGroupGetShieldRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMGroupGetShieldRsp.Merge(dst, src)
+func (m *IMGroupGetShieldRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMGroupGetShieldRsp.Merge(m, src)
 }
 func (m *IMGroupGetShieldRsp) XXX_Size() int {
 	return xxx_messageInfo_IMGroupGetShieldRsp.Size(m)
@@ -849,7 +867,7 @@ func (m *IMGroupGetShieldRsp) GetAttachData() []byte {
 }
 
 type IMFileTransferReq struct {
-	// cmd id:			0x0715
+	//cmd id:			0x0715
 	FromUserId           *uint32                         `protobuf:"varint,1,req,name=from_user_id,json=fromUserId" json:"from_user_id,omitempty"`
 	ToUserId             *uint32                         `protobuf:"varint,2,req,name=to_user_id,json=toUserId" json:"to_user_id,omitempty"`
 	FileName             *string                         `protobuf:"bytes,3,req,name=file_name,json=fileName" json:"file_name,omitempty"`
@@ -865,16 +883,17 @@ func (m *IMFileTransferReq) Reset()         { *m = IMFileTransferReq{} }
 func (m *IMFileTransferReq) String() string { return proto.CompactTextString(m) }
 func (*IMFileTransferReq) ProtoMessage()    {}
 func (*IMFileTransferReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{16}
+	return fileDescriptor_97402e2eff85109c, []int{16}
 }
+
 func (m *IMFileTransferReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileTransferReq.Unmarshal(m, b)
 }
 func (m *IMFileTransferReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileTransferReq.Marshal(b, m, deterministic)
 }
-func (dst *IMFileTransferReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileTransferReq.Merge(dst, src)
+func (m *IMFileTransferReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileTransferReq.Merge(m, src)
 }
 func (m *IMFileTransferReq) XXX_Size() int {
 	return xxx_messageInfo_IMFileTransferReq.Size(m)
@@ -928,7 +947,7 @@ func (m *IMFileTransferReq) GetAttachData() []byte {
 }
 
 type IMFileTransferRsp struct {
-	// cmd id:			0x0716
+	//cmd id:			0x0716
 	ResultCode           *uint32                         `protobuf:"varint,1,req,name=result_code,json=resultCode" json:"result_code,omitempty"`
 	FromUserId           *uint32                         `protobuf:"varint,2,req,name=from_user_id,json=fromUserId" json:"from_user_id,omitempty"`
 	ToUserId             *uint32                         `protobuf:"varint,3,req,name=to_user_id,json=toUserId" json:"to_user_id,omitempty"`
@@ -946,16 +965,17 @@ func (m *IMFileTransferRsp) Reset()         { *m = IMFileTransferRsp{} }
 func (m *IMFileTransferRsp) String() string { return proto.CompactTextString(m) }
 func (*IMFileTransferRsp) ProtoMessage()    {}
 func (*IMFileTransferRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{17}
+	return fileDescriptor_97402e2eff85109c, []int{17}
 }
+
 func (m *IMFileTransferRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileTransferRsp.Unmarshal(m, b)
 }
 func (m *IMFileTransferRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileTransferRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMFileTransferRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileTransferRsp.Merge(dst, src)
+func (m *IMFileTransferRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileTransferRsp.Merge(m, src)
 }
 func (m *IMFileTransferRsp) XXX_Size() int {
 	return xxx_messageInfo_IMFileTransferRsp.Size(m)
@@ -1032,16 +1052,17 @@ func (m *IMFileServerIPReq) Reset()         { *m = IMFileServerIPReq{} }
 func (m *IMFileServerIPReq) String() string { return proto.CompactTextString(m) }
 func (*IMFileServerIPReq) ProtoMessage()    {}
 func (*IMFileServerIPReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{18}
+	return fileDescriptor_97402e2eff85109c, []int{18}
 }
+
 func (m *IMFileServerIPReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileServerIPReq.Unmarshal(m, b)
 }
 func (m *IMFileServerIPReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileServerIPReq.Marshal(b, m, deterministic)
 }
-func (dst *IMFileServerIPReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileServerIPReq.Merge(dst, src)
+func (m *IMFileServerIPReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileServerIPReq.Merge(m, src)
 }
 func (m *IMFileServerIPReq) XXX_Size() int {
 	return xxx_messageInfo_IMFileServerIPReq.Size(m)
@@ -1053,7 +1074,7 @@ func (m *IMFileServerIPReq) XXX_DiscardUnknown() {
 var xxx_messageInfo_IMFileServerIPReq proto.InternalMessageInfo
 
 type IMFileServerIPRsp struct {
-	// cmd id:			0x0718
+	//cmd id:			0x0718
 	IpAddrList           []*IM_BaseDefine.IpAddr `protobuf:"bytes,1,rep,name=ip_addr_list,json=ipAddrList" json:"ip_addr_list,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
 	XXX_unrecognized     []byte                  `json:"-"`
@@ -1064,16 +1085,17 @@ func (m *IMFileServerIPRsp) Reset()         { *m = IMFileServerIPRsp{} }
 func (m *IMFileServerIPRsp) String() string { return proto.CompactTextString(m) }
 func (*IMFileServerIPRsp) ProtoMessage()    {}
 func (*IMFileServerIPRsp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_IM_Server_27e5737cfa6601ad, []int{19}
+	return fileDescriptor_97402e2eff85109c, []int{19}
 }
+
 func (m *IMFileServerIPRsp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IMFileServerIPRsp.Unmarshal(m, b)
 }
 func (m *IMFileServerIPRsp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IMFileServerIPRsp.Marshal(b, m, deterministic)
 }
-func (dst *IMFileServerIPRsp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IMFileServerIPRsp.Merge(dst, src)
+func (m *IMFileServerIPRsp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IMFileServerIPRsp.Merge(m, src)
 }
 func (m *IMFileServerIPRsp) XXX_Size() int {
 	return xxx_messageInfo_IMFileServerIPRsp.Size(m)
@@ -1114,9 +1136,9 @@ func init() {
 	proto.RegisterType((*IMFileServerIPRsp)(nil), "IM.Server.IMFileServerIPRsp")
 }
 
-func init() { proto.RegisterFile("IM.Server.proto", fileDescriptor_IM_Server_27e5737cfa6601ad) }
+func init() { proto.RegisterFile("IM.Server.proto", fileDescriptor_97402e2eff85109c) }
 
-var fileDescriptor_IM_Server_27e5737cfa6601ad = []byte{
+var fileDescriptor_97402e2eff85109c = []byte{
 	// 970 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0xdd, 0x6e, 0xdb, 0x36,
 	0x14, 0x86, 0xec, 0xfc, 0xf9, 0xd8, 0x4e, 0x33, 0xa5, 0x5b, 0xdc, 0xba, 0x43, 0x3c, 0xf5, 0x26,
