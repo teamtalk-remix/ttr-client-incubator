@@ -5,7 +5,7 @@ import "fmt"
 func PrintHelp() {
 	fmt.Print("Usage:\n")
 	fmt.Print("  login user_name user_password\n")
-	fmt.Print("  send_msg to_id msg_content\n")
+	fmt.Print("  sendmsg from_id to_id msg_content\n")
 
 	//fmt.Print("  shop_member\n")
 	//fmt.Print("  recent_contact\n")

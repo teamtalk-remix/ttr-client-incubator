@@ -13,21 +13,17 @@ import (
 	"strconv"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gogo/protobuf/proto"
+	b "github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_BaseDefine"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_Message"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_Other"
 	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/cmd/test-client/help"
 	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/pkg/pdubase"
-	b "github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_BaseDefine"
 	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_Login"
 )
-
-//type testCommand struct {
-//	Command    string
-//	ServerIP   string
-//	ServerPort string
-//	UserId     string
-//}
 
 var globalConn net.Conn
 var msgid uint32
@@ -43,31 +39,72 @@ func Connect(serverIP, serverPort string) (net.Conn, error) {
 }
 
 func SendMsg(conn net.Conn, from, to uint32, s string) {
-	//msgid = msgid + 1
-	//mt := b.MsgType_MSG_TYPE_SINGLE_TEXT
-	//msg := &IM_Message.IMMsgData{
-	//	FromUserId:  proto.Uint32(from),
-	//	ToSessionId: proto.Uint32(to),
-	//	MsgId:       proto.Uint32(msgid),
-	//	MsgData:     []byte(s),
-	//	CreateTime:  proto.Uint32(uint32(time.Now().Unix())),
-	//	MsgType:     &mt,
-	//}
-	//var pdu pdubase.CImPdu
-	//pdu.SetServiceId(b.ServiceID_SID_MSG)
-	//pdu.SetCommandId(b.CommandID_CID_MSG_DATA)
-	//pdu.SetPBMsg(msg)
-	//
-	//reqBodyBytes := new(bytes.Buffer)
-	//json.NewEncoder(reqBodyBytes).Encode(pdu)
-	//
-	//_, err := conn.Write(reqBodyBytes.Bytes())
-	//if err != nil {
-	//	panic(err)
-	//}
+	msgid = msgid + 1
+	mt := b.MsgType_MSG_TYPE_SINGLE_TEXT
+	msg := &IM_Message.IMMsgData{
+		FromUserId:  proto.Uint32(from),
+		ToSessionId: proto.Uint32(to),
+		MsgId:       proto.Uint32(msgid),
+		MsgData:     []byte(s),
+		CreateTime:  proto.Uint32(uint32(time.Now().Unix())),
+		MsgType:     &mt,
+	}
+	var pdu pdubase.CImPdu
+	pdu.SetServiceId(b.ServiceID_SID_MSG)
+	pdu.SetCommandId(b.CommandID_CID_MSG_DATA)
+	pdu.SetPB(msg)
+
+	_, err := conn.Write(pdu.Buffer().Bytes())
+	if err != nil {
+		checkErr(err)
+	}
 }
 
-func _HandleLoginResponse(pdu pdubase.CImPdu) {
+func SendLogin(conn net.Conn, userName, userPass string) {
+	ols := b.UserStatType_USER_STATUS_ONLINE
+	ct := b.ClientType_CLIENT_TYPE_WINDOWS
+
+	msg := &IM_Login.IMLoginReq{
+		UserName:      proto.String(userName),
+		Password:      proto.String(getMD5Hash(userPass)),
+		OnlineStatus:  &ols,
+		ClientType:    &ct,
+		ClientVersion: proto.String("1.0"),
+	}
+	var pdu pdubase.CImPdu
+	pdu.SetServiceId(b.ServiceID_SID_LOGIN)
+	pdu.SetCommandId(b.CommandID_CID_LOGIN_REQ_USERLOGIN)
+	pdu.SetPB(msg)
+
+	_, err := conn.Write(pdu.Buffer().Bytes())
+	if err != nil {
+		checkErr(err)
+	}
+}
+
+func SendHeartBeat(conn net.Conn, d time.Duration) {
+	for x := range time.Tick(d) {
+		if conn != nil {
+			fmt.Println("Time: ", x)
+			fmt.Println("Start sending heartbeat....")
+			msg := &IM_Other.IMHeartBeat{}
+			var pdu pdubase.CImPdu
+			pdu.SetServiceId(b.ServiceID_SID_OTHER)
+			pdu.SetCommandId(b.CommandID_CID_OTHER_HEARTBEAT)
+			pdu.SetPB(msg)
+			_, err := conn.Write(pdu.Buffer().Bytes())
+			if err != nil {
+				checkErr(err)
+			}
+			fmt.Println("Sending heartbeat succeed")
+		} else {
+			fmt.Println("globalConn is null exit....")
+			break
+		}
+	}
+}
+
+func _HandleLoginResponse(conn net.Conn, pdu pdubase.CImPdu) {
 	msg := IM_Login.IMLoginRes{}
 	pdu.GetPBMsg(pdu.Buffer().Bytes(), &msg)
 	spew.Dump(msg.String())
@@ -77,17 +114,17 @@ func _HandleLoginResponse(pdu pdubase.CImPdu) {
 	spew.Dump(msg.GetUserInfo())
 
 	if msg.GetResultCode() == b.ResultType_REFUSE_REASON_NONE {
-
+		go SendHeartBeat(conn, CLIENT_HEARTBEAT_INTERVAL * time.Millisecond)
 	}
 }
 
 //func Timer
-func HandlePdu(pdu pdubase.CImPdu) {
+func HandlePdu(conn net.Conn, pdu pdubase.CImPdu) {
 	switch pdu.CommandId() {
 	case b.CommandID_CID_OTHER_HEARTBEAT:
-		println("HandlePdu:  heartbeat ")
+		println("HandlePdu:  heartbeat received....")
 	case b.CommandID_CID_LOGIN_RES_USERLOGIN:
-		_HandleLoginResponse(pdu)
+		_HandleLoginResponse(conn, pdu)
 	}
 }
 
@@ -140,7 +177,7 @@ func testReceiveLoginResponse(conn net.Conn) {
 		}
 		//copy
 		pdu.WriteBuffer(bodyBuf)
-		HandlePdu(pdu)
+		HandlePdu(conn, pdu)
 	}
 }
 
@@ -155,26 +192,7 @@ func getMD5Hash(text string) string {
 }
 
 func login(conn net.Conn, userName, userPass string) {
-	fmt.Println("\n-> start login.....")
-	ols := b.UserStatType_USER_STATUS_ONLINE
-	ct := b.ClientType_CLIENT_TYPE_WINDOWS
-
-	msg := &IM_Login.IMLoginReq{
-		UserName:      proto.String(userName),
-		Password:      proto.String(getMD5Hash(userPass)),
-		OnlineStatus:  &ols,
-		ClientType:    &ct,
-		ClientVersion: proto.String("1.0"),
-	}
-	var pdu pdubase.CImPdu
-	pdu.SetServiceId(b.ServiceID_SID_LOGIN)
-	pdu.SetCommandId(b.CommandID_CID_LOGIN_REQ_USERLOGIN)
-	pdu.SetPB(msg)
-
-	_, err := conn.Write(pdu.Buffer().Bytes())
-	if err != nil {
-		panic(err)
-	}
+	SendLogin(conn, userName, userPass)
 }
 
 type httpResponse struct {
@@ -244,8 +262,9 @@ func main() {
 				panic(err)
 			}
 			login(globalConn, userName, userPass)
+			//TODO: this recvMsg could move out of switch block
 			go recvMsg(globalConn)
-		case "send_msg":
+		case "sendmsg":
 			if globalConn == nil {
 				fmt.Println("globalConn does not exist... please run connect command first...")
 				os.Exit(1)
