@@ -5,6 +5,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -17,12 +18,18 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gogo/protobuf/proto"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/cmd/test-client/help"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/cmd/test-client/utils"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/pkg/pdubase"
 	b "github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_BaseDefine"
+	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_Login"
 	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_Message"
 	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_Other"
-	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/cmd/test-client/help"
-	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/pkg/pdubase"
-	"github.com/teamtalk-remix/ttr-client-incubator/test-client-go/proto/IM_Login"
+)
+
+var (
+	logfileStr = fmt.Sprintf("/tmp/testc-%s.log", time.Now().Format("20060102150405"))
+	logpath    = flag.String("logpath", logfileStr, "Log Path")
 )
 
 var globalConn net.Conn
@@ -85,8 +92,7 @@ func SendLogin(conn net.Conn, userName, userPass string) {
 func SendHeartBeat(conn net.Conn, d time.Duration) {
 	for x := range time.Tick(d) {
 		if conn != nil {
-			fmt.Println("Time: ", x)
-			fmt.Println("Start sending heartbeat....")
+			utils.Log.Println("Time: ", x)
 			msg := &IM_Other.IMHeartBeat{}
 			var pdu pdubase.CImPdu
 			pdu.SetServiceId(b.ServiceID_SID_OTHER)
@@ -96,59 +102,204 @@ func SendHeartBeat(conn net.Conn, d time.Duration) {
 			if err != nil {
 				checkErr(err)
 			}
-			fmt.Println("Sending heartbeat succeed")
+			utils.Log.Println("Sending heartbeat succeed")
 		} else {
-			fmt.Println("globalConn is null exit....")
+			utils.Log.Println("globalConn is null exit....")
 			break
 		}
 	}
 }
 
-func _HandleLoginResponse(conn net.Conn, pdu pdubase.CImPdu) {
+func HandleLoginResponse(conn net.Conn, pdu pdubase.CImPdu) {
 	msg := IM_Login.IMLoginRes{}
 	pdu.GetPBMsg(pdu.Buffer().Bytes(), &msg)
 	spew.Dump(msg.String())
-	spew.Dump("receive _HandleLoginResponse")
 	spew.Dump(msg.GetResultCode())
 	spew.Dump(msg.GetResultString())
 	spew.Dump(msg.GetUserInfo())
 
 	if msg.GetResultCode() == b.ResultType_REFUSE_REASON_NONE {
-		go SendHeartBeat(conn, CLIENT_HEARTBEAT_INTERVAL * time.Millisecond)
+		go SendHeartBeat(conn, CLIENT_HEARTBEAT_INTERVAL*time.Millisecond)
 	}
+}
+
+func HandleMsgDataResponse(conn net.Conn, pdu pdubase.CImPdu) {
+	msg := IM_Message.IMMsgData{}
+	pdu.GetPBMsg(pdu.Buffer().Bytes(), &msg)
+	spew.Dump("receive HandleMsgDataResponse from:", msg.FromUserId, msg.MsgType)
+	spew.Dump(msg.String())
+}
+
+func HandleListAllUserResponse(conn net.Conn, pdu pdubase.CImPdu) {
+	//IM::Buddy::IMAllUserRsp msgResp;
+	//uint32_t nSeqNo = pPdu->GetSeqNum();
+	//if(msgResp.ParseFromArray(pPdu->GetBodyData(), pPdu->GetBodyLength()))
+	//{
+	//	uint32_t userCnt = msgResp.user_list_size();
+	//	printf("get %d users\n", userCnt);
+	//	list<IM::BaseDefine::UserInfo> lsUsers;
+	//	for(uint32_t i=0; i<userCnt; ++i)
+	//	{
+	//	IM::BaseDefine::UserInfo cUserInfo = msgResp.user_list(i);
+	//	lsUsers.push_back(cUserInfo);
+	//	}
+	//	m_pCallback->onGetChangedUser(nSeqNo, lsUsers);
+	//}
+	//else
+	//{
+	//	m_pCallback->onError(nSeqNo, pPdu->GetCommandId(), "parse pb error");
+	//}
+}
+
+func HandleListUserInfoResponse(conn net.Conn, pdu pdubase.CImPdu) {
+	//IM::Buddy::IMUsersInfoRsp msgResp;
+	//uint32_t nSeqNo = pPdu->GetSeqNum();
+	//if(msgResp.ParseFromArray(pPdu->GetBodyData(), pPdu->GetBodyLength()))
+	//{
+	//	uint32_t userCnt = msgResp.user_info_list_size();
+	//	list<IM::BaseDefine::UserInfo> lsUser;
+	//	for (uint32_t i=0; i<userCnt; ++i) {
+	//IM::BaseDefine::UserInfo userInfo = msgResp.user_info_list(i);
+	//	lsUser.push_back(userInfo);
+	//}
+	//	m_pCallback->onGetUserInfo(nSeqNo, lsUser);
+	//}
+	//else
+	//{
+	//	m_pCallback->onError(nSeqNo, pPdu->GetCommandId(), "parse pb error");
+	//}
+}
+
+func HandleMsgDataAck(conn net.Conn, pdu pdubase.CImPdu) {
+	//IM::Message::IMMsgDataAck msgResp;
+	//uint32_t nSeqNo = pPdu->GetSeqNum();
+	//if(msgResp.ParseFromArray(pPdu->GetBodyData(), pPdu->GetBodyLength()))
+	//{
+	//uint32_t nSendId = msgResp.user_id();
+	//uint32_t nRecvId = msgResp.session_id();
+	//uint32_t nMsgId = msgResp.msg_id();
+	//IM::BaseDefine::SessionType nType = msgResp.session_type();
+	//m_pCallback->onSendMsg(nSeqNo, nSendId, nRecvId, nType, nMsgId);
+	//}
+	//else
+	//{
+	//m_pCallback->onError(nSeqNo, pPdu->GetCommandId(), "parse pb error");
+	//}
+}
+
+func HandleMsgListResponse(conn net.Conn, pdu pdubase.CImPdu) {
+	//IM::Message::IMGetMsgListRsp msgResp;
+	//uint32_t nSeqNo = pPdu->GetSeqNum();
+	//if(msgResp.ParseFromArray(pPdu->GetBodyData(), pPdu->GetBodyLength()))
+	//{
+	//	uint32_t nUserId= msgResp.user_id();
+	//IM::BaseDefine::SessionType nSessionType = msgResp.session_type();
+	//	uint32_t nPeerId = msgResp.session_id();
+	//	uint32_t nMsgId = msgResp.msg_id_begin();
+	//	uint32_t nMsgCnt = msgResp.msg_list_size();
+	//	list<IM::BaseDefine::MsgInfo> lsMsg;
+	//	for(uint32_t i=0; i<nMsgCnt; ++i)
+	//	{
+	//	IM::BaseDefine::MsgInfo msgInfo = msgResp.msg_list(i);
+	//	lsMsg.push_back(msgInfo);
+	//	}
+	//	m_pCallback->onGetMsgList(nSeqNo, nUserId, nPeerId, nSessionType, nMsgId, nMsgCnt, lsMsg);
+	//}
+	//else
+	//{
+	//	m_pCallback->onError(nSeqNo, pPdu->GetCommandId(), "parse pb falied");
+	//}
+}
+
+func HandleMsgUnreadCntResponse(conn net.Conn, pdu pdubase.CImPdu) {
+	//IM::Message::IMUnreadMsgCntRsp msgResp;
+	//uint32_t nSeqNo = pPdu->GetSeqNum();
+	//if(msgResp.ParseFromArray(pPdu->GetBodyData(), pPdu->GetBodyLength()))
+	//{
+	//	list<IM::BaseDefine::UnreadInfo> lsUnreadInfo;
+	//	uint32_t nUserId = msgResp.user_id();
+	//	uint32_t nTotalCnt = msgResp.total_cnt();
+	//	uint32_t nCnt = msgResp.unreadinfo_list_size();
+	//	for (uint32_t i=0; i<nCnt; ++i) {
+	//IM::BaseDefine::UnreadInfo unreadInfo = msgResp.unreadinfo_list(i);
+	//	lsUnreadInfo.push_back(unreadInfo);
+	//}
+	//	m_pCallback->onGetUnreadMsgCnt(nSeqNo, nUserId, nTotalCnt, lsUnreadInfo);
+	//}
+	//else
+	//{
+	//	m_pCallback->onError(nSeqNo, pPdu->GetCommandId(), "parse pb fail");
+	//}
+}
+func HandleRecentContactSessionResponse(conn net.Conn, pdu pdubase.CImPdu) {
+	//IM::Buddy::IMRecentContactSessionRsp msgResp;
+	//uint32_t nSeqNo = pPdu->GetSeqNum();
+	//if(msgResp.ParseFromArray(pPdu->GetBodyData(), pPdu->GetBodyLength()))
+	//{
+	//	list<IM::BaseDefine::ContactSessionInfo> lsSession;
+	//	uint32_t nUserId = msgResp.user_id();
+	//	uint32_t nCnt = msgResp.contact_session_list_size();
+	//	for (uint32_t i=0; i<nCnt; ++i) {
+	//IM::BaseDefine::ContactSessionInfo session = msgResp.contact_session_list(i);
+	//	lsSession.push_back(session);
+	//}
+	//	m_pCallback->onGetRecentSession(nSeqNo, nUserId, lsSession);
+	//}
+	//else
+	//{
+	//	m_pCallback->onError(nSeqNo, pPdu->GetCommandId(), "parse pb error");
+	//}
 }
 
 //func Timer
 func HandlePdu(conn net.Conn, pdu pdubase.CImPdu) {
 	switch pdu.CommandId() {
 	case b.CommandID_CID_OTHER_HEARTBEAT:
-		println("HandlePdu:  heartbeat received....")
+		utils.Log.Println("HandlePdu:  heartbeat received....")
 	case b.CommandID_CID_LOGIN_RES_USERLOGIN:
-		_HandleLoginResponse(conn, pdu)
+		HandleLoginResponse(conn, pdu)
+	case b.CommandID_CID_BUDDY_LIST_ALL_USER_RESPONSE:
+		HandleListAllUserResponse(conn, pdu)
+	case b.CommandID_CID_BUDDY_LIST_USER_INFO_RESPONSE:
+		HandleListUserInfoResponse(conn, pdu)
+	case b.CommandID_CID_MSG_UNREAD_CNT_RESPONSE:
+		HandleMsgUnreadCntResponse(conn, pdu)
+	case b.CommandID_CID_BUDDY_LIST_RECENT_CONTACT_SESSION_RESPONSE:
+		HandleRecentContactSessionResponse(conn, pdu)
+	case b.CommandID_CID_MSG_LIST_RESPONSE:
+		HandleMsgListResponse(conn, pdu)
+	case b.CommandID_CID_MSG_DATA_ACK:
+		HandleMsgDataAck(conn, pdu)
+	case b.CommandID_CID_MSG_DATA:
+		HandleMsgDataResponse(conn, pdu)
+	case b.CommandID_CID_BUDDY_LIST_STATUS_NOTIFY:
+
+	default:
+		utils.Log.Println("wrong msg_type", pdu.CommandId(), pdu.ServiceId())
 	}
 }
 
 func checkErr(err error) {
 	if err == nil {
-		println("Ok")
+		utils.Log.Println("Ok")
 		return
 
 	} else if netError, ok := err.(net.Error); ok && netError.Timeout() {
-		println("Timeout")
+		utils.Log.Println("Timeout")
 		return
 	}
 
 	switch t := err.(type) {
 	case *net.OpError:
 		if t.Op == "dial" {
-			println("Unknown host")
+			utils.Log.Println("Unknown host")
 		} else if t.Op == "read" {
-			println("Connection refused")
+			utils.Log.Println("Connection refused")
 		}
 
 	case syscall.Errno:
 		if t == syscall.ECONNREFUSED {
-			println("Connection refused")
+			utils.Log.Println("Connection refused")
 		}
 	}
 }
@@ -158,7 +309,7 @@ func testReceiveLoginResponse(conn net.Conn) {
 		headerBuf := make([]byte, pdubase.PduHeaderSize)
 		_, err := conn.Read(headerBuf)
 		if err != nil {
-			println("Breaking......:", err.Error())
+			utils.Log.Println("Breaking......:", err.Error())
 			checkErr(err)
 			break
 		}
@@ -167,11 +318,10 @@ func testReceiveLoginResponse(conn net.Conn) {
 		var pdu pdubase.CImPdu
 		pdu.GetHeader(headerBuf)
 		pdu.Length()
-		spew.Dump(pdu)
 		bodyBuf := make([]byte, pdu.Length()-pdubase.PduHeaderSize)
 		_, err = conn.Read(bodyBuf[:pdu.Length()-pdubase.PduHeaderSize])
 		if err != nil {
-			println("Breaking......:", err.Error())
+			utils.Log.Println("Breaking......:", err.Error())
 			checkErr(err)
 			break
 		}
@@ -182,7 +332,7 @@ func testReceiveLoginResponse(conn net.Conn) {
 }
 
 func recvMsg(conn net.Conn) {
-	fmt.Println("\n-> start lisiten.....")
+	utils.Log.Println("\n-> start lisiten.....")
 	testReceiveLoginResponse(conn)
 }
 
@@ -218,19 +368,20 @@ func getMsgServerIPPort() (string, string) {
 	if err != nil {
 		panic(err)
 	}
-	spew.Dump(res)
 	if res.Code != 0 {
-		panic("res.Code is not 0")
+		utils.Log.Panic("res.Code is not 0")
 	}
 
 	if res.PriorIP == "" {
 		return res.BackupIP, res.Port
 	}
-	return res.PriorIP, res.Port
+	return "10.110.196.118", "8000"
+	//return res.PriorIP, res.Port
 }
 
 func main() {
 
+	utils.NewLog(*logpath)
 	fmt.Println("Simple Client, type 'help' to show commands")
 	fmt.Println("---------------------")
 

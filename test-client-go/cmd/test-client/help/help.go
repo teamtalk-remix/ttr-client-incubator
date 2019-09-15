@@ -51,6 +51,7 @@ func PrintHelp() {
 	//fmt.Print("  group_simple_info group_id1 group_id2 ...\n")
 	//fmt.Print("  group_unread_info group_id1 group_id2 ...\n")
 	//
+
 	////begin: d by @wuhui 2015.06.16 for group msg test
 	//fmt.Print("  group_applicant_list_info group_id_url\n")
 	//fmt.Print("  group_list_goods_info group_id_url\n")
